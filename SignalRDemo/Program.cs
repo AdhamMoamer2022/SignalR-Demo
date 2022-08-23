@@ -1,7 +1,30 @@
+using SignalRDemo.HubConfig;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddCors(
+    options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                    });
+            }
+);
+
+builder.Services.AddSignalR(
+    options =>
+    {
+        options.EnableDetailedErrors = true;
+    }
+);
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -17,6 +40,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors("AllowAllHeaders");
+
+app.UseEndpoints(endpoints =>
+         { 
+             endpoints.MapControllers();
+             endpoints.MapHub<MyHub>("/toastr");
+         }
+);
 
 app.UseAuthorization();
 
