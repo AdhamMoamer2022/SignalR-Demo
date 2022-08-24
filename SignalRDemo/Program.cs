@@ -1,4 +1,8 @@
+
+using Microsoft.EntityFrameworkCore;
+using SignalRDemo.EFModels;
 using SignalRDemo.HubConfig;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +29,9 @@ builder.Services.AddSignalR(
 );
 
 builder.Services.AddControllers();
+builder.Services.AddDbContextPool<SignalRContext>(
+    options => options.UseSqlServer("server=ADHAM-PC\\SQLEXPRESS; database=SignalR; User Id=sa;Password=sql;")
+    );
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as signalR from '@aspnet/signalr';
 import { ToastrService } from 'ngx-toastr';
 
@@ -7,8 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SignalRService {
   public hubConnection: signalR.HubConnection | undefined;
+  personName: string = '';
 
-  constructor(public toastr: ToastrService) {}
+  constructor(public toastr: ToastrService, public router: Router) {}
 
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -36,6 +38,7 @@ export class SignalRService {
       .catch((err) => console.error(err));
     console.log('sendMessage end');
   };
+
   public sendMessageListener = () => {
     console.log('sendMessageListener start');
     this.hubConnection?.on('MessageResponse', (data: any) => {
