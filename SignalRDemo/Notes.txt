@@ -1,0 +1,5 @@
+for Scaffold use the below command in the package manager console.
+
+
+Scaffold-DbContext "server=ADHAM-PC\SQLEXPRESS; database=SignalR; User Id=sa;Password=sql;"
+Microsoft.EntityFrameworkCore.SqlServer -NoPluralize -OutputDir EFModels -Tables person, connections -f
